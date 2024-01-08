@@ -14,6 +14,8 @@ router.post('/create',(req,res,next)=>{
         else
          return res.status(500).json(err);
     });
+    
+});
     //show
 
     router.get('/read',(req,res,next)=>{
@@ -26,9 +28,30 @@ router.post('/create',(req,res,next)=>{
         return res.status(500).json(err);
       });
  
-    })
+
+    });
+
+//update
+
+router.patch('/update/:id', (req, res, next) => {
+    const id = req.params.id; 
+    let product = req.body;
+    
+    var query = 'update product set name=?,description=?,price=? where id=?';
+    
+    connection.query(query, [product.name, product.description, product.price, id], (err, results) => {
+        if (!err) {
+            if (results.affectedRows === 0) { 
+                return res.status(404).json({ message: "Product not found" });
+            }
+            return res.status(200).json({ message: 'Product updated successfully' });
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+});
+//delete
 
 
-})
 
 module.exports=router;
