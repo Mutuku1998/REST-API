@@ -1,14 +1,14 @@
 const express = require('express');
 const connection = require('../connection.js');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs');
+const salt = bcrypt.genSaltSync(10);
 const router = express.Router();
 
-router.post('/user', async (req, res, next) => {
-    const saltRounds = 10;
+router.post('/user',  (req, res, next) => {
 
     try {
         const password = req.body.password;
-        const encryptedPassword = await bcrypt.hash(password, saltRounds);
+        const encryptedPassword = bcrypt.hashSync(password, salt);
 
         const sql = 'INSERT INTO registration (name, email, password) VALUES (?, ?, ?)';
         const values = [req.body.name, req.body.email, encryptedPassword];
