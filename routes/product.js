@@ -1,7 +1,11 @@
 const express = require("express");
 const connection = require("../connection.js");
+const authenticateUser = require('./middlewares/authenticateUser.js')
+
 
 const router = express.Router();
+
+router.use(authenticateUser);
 //create
 router.post("/create", (req, res, next) => {
   let product = req.body;

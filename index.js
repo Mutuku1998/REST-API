@@ -10,7 +10,6 @@ const Loginroute = require('./routes/login.js')
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 
-
 //middlewares
 app.use(bodyParser.json());
 app.use(express.json());
